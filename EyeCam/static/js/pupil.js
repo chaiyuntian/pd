@@ -205,6 +205,11 @@ pupil.pt = function(s,w,h){
     return pt;
 };
 
+// hough transformation to detect circle
+pupil.hc = function(s,w,h,rmin,rmax)
+{
+    
+}
 
 
 
