@@ -38,12 +38,12 @@
 
             var  grayData= pupil.gs(eyeData.data);
             //var  grayInvs = pupil.invs(grayData);
-            var  thres = pupil.fT(pupil.hist(grayData),w*h,0.1);
-            var  grayCut = pupil.ucut(grayData,thres,0);
+            var  thres = pupil.fT(pupil.hist(grayData),w*h,0.05);
+            //var  grayCut = pupil.bin(grayData,thres);
             //var  grayBin = pupil.bin(grayInvs,200,0);
-            var  grayCny = pupil.cny(grayData,w,h);
+            //var  grayCny = pupil.cny(grayData,w,h);
             //var  grayCut2 = pupil.bin(grayCny,150);
-            var  graySb = pupil.sbl(grayCut,w,h,pupil.kernel.k1);
+            var  graySb = pupil.sbl(grayData,w,h,pupil.kernel.k0);
             //var  grayCut = pupil.dcut(grayCny,135,0);
             var  data = graySb;
 
@@ -59,13 +59,11 @@
                     imgData.data[k2+3]=data[k];
                 }
             }
-            //console.log(grayInvs);
-
-
-            //ctxR.putImageData(imgData,0,0);
 
             ctxR.putImageData(imgData,0,0);
-            //console.log(eyeData);
+
+            pupil.hc(graySb,w,h,w/2.5,w/2,5);
+
         };
 
         function Eye2Pupil(eyedata)

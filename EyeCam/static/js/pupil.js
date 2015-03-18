@@ -200,15 +200,104 @@ pupil.pt = function(s,w,h){
     var pt = [];
     for (var i = 0; i < l; i += 1)
     {
-        if(s[i]!=0){ pt.push({x:i%w,y:Math.floor(i/w)});}
+        if(s[i]>0){ pt.push({x:i%w,y:Math.floor(i/w)});}
     }
     return pt;
 };
 
-// hough transformation to detect circle
-pupil.hc = function(s,w,h,rmin,rmax)
+//
+/*
+* Hough transformation to detect circle
+* @param s - source image
+* @param w - width
+* @param h - height
+* @param rmin - minimal radius
+* @param rmax - maximal radius
+* @param rstep - step width of radius
+* @param astep - step width of angle in radian
+* */
+pupil.hc = function(s,w,h,rmin,rmax,rstep,astep)
 {
-    
+    rstep = rstep||5;
+    astep = astep||(Math.PI/36.0);
+    var rsize = Math.round((rmax-rmin)/rstep)+1;
+    var asize = Math.round(2*Math.PI/astep);
+    var hspace = [];
+
+    //initialize hspace
+    for(var i=0;i<w;i++)
+    {
+        hspace[i] = [];
+        for(var j=0;j<h;j++)
+        {
+            hspace[i][j] = [];
+            for(var k = 0;k<rsize;k++)
+            {
+                hspace[i][j][k] = 0;
+            }
+
+        }
+    }
+
+    //find none zero points
+    var pts = pupil.pt(s,w,h);
+    console.log(pts)
+    var pcnt = pts.length;
+    // Hough Transform
+    // a = x - r*cos(angle)
+    // b = y - r*sin(angle)
+    for(var i=0;i<pcnt;i++)
+    {
+        for(var r=0;i<rsize;i++)
+        {
+            for(var k=0;k<asize;k++)
+            {
+                var x = pts[i].x,y = pts[i].y;
+                var a = Math.round(x-(rmin+(r-1)*rstep)*Math.cos(k*astep));
+                var b = Math.round(y-(rmin+(r-1)*rstep)*Math.sin(k*astep));
+                if(a>0&&a<w&&b>0&&b<=h){hspace[a][b][r]=hspace[a][b][r]+1;}
+            }
+
+        }
+    }
+
+    var space2 = []
+    for(var i=0;i<w;i++)
+    {
+        for(var j=0;j<h;j++)
+        {
+            for(var k = 0;k<rsize;k++)
+            {
+                if(hspace[i][j][k]>0){space2.push(hspace[i][j][k])};
+            }
+
+        }
+    }
+
+
+    space2.insertionSort = function()
+    {
+        for (var i = 1; i < this.length; ++i)
+        {
+            var j = i, value = this[i];
+            while (j > 0 && this[j - 1] > value)
+            {
+                this[j] = this[j - 1];
+                --j;
+            }
+            this[j] = value;
+        }
+    };
+
+    space2.insertionSort();
+    //hspace.sort(function(a,b){return a.count< b.count?1:-1});//从大到小排序
+
+    console.log([w,h,rsize]);
+
+    console.log(space2);
+
+
+
 }
 
 
