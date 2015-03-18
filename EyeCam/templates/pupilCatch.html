@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+	<title>predator vision</title>
+	<meta charset="utf-8" />
+ 	<link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+    <canvas id="le" style="border: 5px blue solid"></canvas>
+    <canvas id="re" style="border: 5px blue solid"></canvas>
+    <script src="../static/js/pupil.js"></script>
+
+    <script>
+        var canvasL=document.getElementById("le");
+        var canvasR=document.getElementById("re");
+
+        var ctxL=canvasL.getContext("2d");
+        var ctxR=canvasR.getContext("2d");
+
+
+
+        var imgL=new Image();
+        imgL.src="../static/image/right.png";
+
+
+        imgL.onload = function(){
+            var w = imgL.width,h = imgL.height;
+
+            canvasL.width = w;canvasL.height = h;
+            canvasR.width = w;canvasR.height = h;
+
+            ctxL.drawImage(imgL,0,0);
+            var eyeData = ctxL.getImageData(0,0,w,h);
+
+            //ctxL.putImageData(eyeData,0,0);
+
+            var imgData=ctxL.createImageData(w,h);
+
+            var  grayData= pupil.gs(eyeData.data);
+            //var  grayInvs = pupil.invs(grayData);
+            var  thres = pupil.fT(pupil.hist(grayData),w*h,0.1);
+            var  grayCut = pupil.ucut(grayData,thres,0);
+            //var  grayBin = pupil.bin(grayInvs,200,0);
+            var  grayCny = pupil.cny(grayData,w,h);
+            //var  grayCut2 = pupil.bin(grayCny,150);
+            var  graySb = pupil.sbl(grayCut,w,h,pupil.kernel.k1);
+            //var  grayCut = pupil.dcut(grayCny,135,0);
+            var  data = graySb;
+
+            for(var x=0;x<w;x++)
+            {
+                for(var y=0;y<h;y++)
+                {
+                    var k = x+y*w;
+                    var k2 = k*4;
+                    imgData.data[k2]=data[k];
+                    imgData.data[k2+1]=data[k];
+                    imgData.data[k2+2]=data[k];
+                    imgData.data[k2+3]=data[k];
+                }
+            }
+            //console.log(grayInvs);
+
+
+            //ctxR.putImageData(imgData,0,0);
+
+            ctxR.putImageData(imgData,0,0);
+            //console.log(eyeData);
+        };
+
+        function Eye2Pupil(eyedata)
+        {
+
+
+        }
+
+
+
+
+
+    </script>
+</body>
+</html>
