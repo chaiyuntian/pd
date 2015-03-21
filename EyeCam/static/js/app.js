@@ -1,5 +1,5 @@
 /**
- * Created by administrator on 15-3-21.
+ * Created by Yuntian Chai on 15-3-21.
  */
 
 var APP = {
