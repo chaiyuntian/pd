@@ -64,7 +64,7 @@ var drawCircle = function(ctx,circle)
 
 };
 
-var InitCircles = function(w,h,sp,r,c)
+var Circles = function(w,h,sp,r,c)
 {
     var circles = [];
     var cx = w/2.0;// screen center x;
@@ -81,33 +81,47 @@ var InitCircles = function(w,h,sp,r,c)
 
     // top row
     circles.push(new circle(left,top,r,c));
-    circles.push(new circle(left,cy,r,c));
-    circles.push(new circle(left,bottom,r,c));
+    circles.push(new circle(cx,top,r,c));
+    circles.push(new circle(right,top,r,c));
 
     // center row
-    circles.push(new circle(cx,top,r,c));
+    circles.push(new circle(left,cy,r,c));
+    circles.push(new circle(right,cy,r,c));
     circles.push(new circle(cx,cy,r,c));
-    circles.push(new circle(cx,bottom,r,c));
+
 
     // bottom row
-    circles.push(new circle(right,top,r,c));
-    circles.push(new circle(right,cy,r,c));
+
+    circles.push(new circle(left,bottom,r,c));
+    circles.push(new circle(cx,bottom,r,c));
     circles.push(new circle(right,bottom,r,c));
 
-    return circles;
+    this.children = circles;
+
 
 };
+
+Circles.prototype.drawAll= function(ctx)
+{
+    for(var i=0;i< this.children.length;i++)
+    {
+        drawCircle(ctx,this.children[i]);
+    }
+
+};
+
+Circles.prototype.drawOne= function(ctx,index)
+{
+    drawCircle(ctx,this.children[index]);
+};
+
 
 
 var canvas = new Cvs();
 canvas.clear();
-var circles = InitCircles(canvas.canvas.width,canvas.canvas.height,200,5,"#FF0000");
-for(var i=0;i< circles.length;i++)
-{
-    drawCircle(canvas.ctx,circles[i]);
-}
-
+var circles = new Circles(canvas.canvas.width,canvas.canvas.height,200,5,"#FF0000");
+//circles.drawAll(canvas.ctx);
+circles.drawOne(canvas.ctx,1);
 
 // TO DO
-
 // Add Camera Read and take screen shot
