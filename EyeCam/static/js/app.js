@@ -25,7 +25,7 @@ circle.prototype.changeColor=function(c)
 
 
 var config = function(){
-    this.distance = 100;
+    this.distance = 10;
 
 };
 
@@ -119,7 +119,8 @@ Circles.prototype.drawOne= function(ctx,index)
 
 var canvas = new Cvs();
 canvas.clear();
-var circles = new Circles(canvas.canvas.width,canvas.canvas.height,200,5,"#FF0000");
+var cfg = new config();
+var circles = new Circles(canvas.canvas.width,canvas.canvas.height,cfg.distance,5,"#FF0000");
 //circles.drawAll(canvas.ctx);
 circles.drawOne(canvas.ctx,1);
 
