@@ -20,7 +20,7 @@
 
 
         var imgL=new Image();
-        imgL.src="../static/image/right.png";
+        imgL.src="../static/image/right2.png";
 
 
         imgL.onload = function(){
@@ -38,12 +38,16 @@
 
             var  grayData= pupil.gs(eyeData.data);
             //var  grayInvs = pupil.invs(grayData);
-            var  thres = pupil.fT(pupil.hist(grayData),w*h,0.05);
-            //var  grayCut = pupil.bin(grayData,thres);
+
+
             //var  grayBin = pupil.bin(grayInvs,200,0);
             //var  grayCny = pupil.cny(grayData,w,h);
             //var  grayCut2 = pupil.bin(grayCny,150);
             var  graySb = pupil.sbl(grayData,w,h,pupil.kernel.k0);
+
+            var  thres = pupil.fT(pupil.hist(graySb),w*h,0.1);
+
+            var  grayCut = pupil.bin(graySb,thres);
             //var  grayCut = pupil.dcut(grayCny,135,0);
             var  data = graySb;
 
