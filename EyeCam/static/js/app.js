@@ -16,8 +16,6 @@ var circle = function(x,y,r,c)
     this.y = y||0.0;
     this.r = r||1.0;
     this.c = c||'0xFFFFFF';
-    //this.l = this.x-this.r*0.5;
-    //this.t = this.y-this.r*0.5;
 };
 
 circle.prototype.changeColor=function(c)
@@ -102,9 +100,7 @@ var InitCircles = function(w,h,sp,r,c)
 
 
 var canvas = new Cvs();
-//var c = new circle(0,0,15,"#FF0000");
 canvas.clear();
-//drawCircle(canvas.ctx,c);
 var circles = InitCircles(canvas.canvas.width,canvas.canvas.height,200,5,"#FF0000");
 for(var i=0;i< circles.length;i++)
 {
@@ -112,3 +108,6 @@ for(var i=0;i< circles.length;i++)
 }
 
 
+// TO DO
+
+// Add Camera Read and take screen shot
