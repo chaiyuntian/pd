@@ -25,7 +25,8 @@ h1 {
 	margin: 0 auto;
 }
 
-
+#btnOK{
+    position:absolute; top:60px; left:30px;z-index:20}
 
 #fork, 
 #idevelop {
