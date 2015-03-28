@@ -4,29 +4,7 @@
 
 var pupil = {
     Version:0.5,
-
-    kernel: {
-        k0: {
-            ky: [1, 0, -1,
-                2, 0, -2,
-                1, 0, -1],
-            kx: [
-                1, 2, 1,
-                0, 0, 0,
-                -1, -2, -1
-            ]
-        },
-        k1: {
-            ky: [3, 0, -3,
-                10, 0, -10,
-                3, 0, -3],
-            kx: [
-                3, 10, 3,
-                0, 0, 0,
-                -3, -10, -3
-            ]
-        }
-    }
+    kernel: {k0: {ky:[1,0,-1,2,0,-2,1,0,-1],kx:[1,2,1,0,0,0,-1,-2,-1]},k1:{ky:[3,0,-3,10,0,-10,3,0,-3],kx:[3,10,3,0,0,0,-3,-10,-3]}}
 };
 
 // input image is a 4 channel RGBA image
@@ -295,9 +273,6 @@ pupil.hc = function(s,w,h,rmin,rmax,rstep,astep)
     console.log([w,h,rsize]);
 
     console.log(space2);
-
-
-
 };
 
 
