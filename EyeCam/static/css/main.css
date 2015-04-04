@@ -1,6 +1,27 @@
-body {		
+.main {
 	padding: 50px;
 	background: black;
+    text-align:center;
+}
+
+
+canvas{
+    overflow: visible;
+    
+}
+.insContainer{
+    padding-bottom: 50px;
+    vertical-align: middle;
+}
+
+.instruction{
+    font-size:30;
+    color:white;
+}
+
+.buttona{
+
+
 }
 
 h1 {

@@ -239,7 +239,7 @@ pupil.hc = function(s,w,h,rmin,rmax,rstep,astep)
         }
     }
 
-    var space2 = []
+    var space2 = [];
     for(var i=0;i<w;i++)
     {
         for(var j=0;j<h;j++)

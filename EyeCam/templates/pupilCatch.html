@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
  	<link rel="stylesheet" href="../static/css/main.css">
 </head>
-<body>
+<body class="main">
     <canvas id="le" style="border: 5px blue solid"></canvas>
     <canvas id="re" style="border: 5px blue solid"></canvas>
     <script src="../static/js/pupil.js"></script>
@@ -19,9 +19,8 @@
         var ctxR=canvasR.getContext("2d");
 
 
-
         var imgL=new Image();
-        imgL.src="../static/image/right2.png";
+        imgL.src="../static/image/right.png";
 
 
         imgL.onload = function(){
@@ -35,23 +34,19 @@
 
             //ctxL.putImageData(eyeData,0,0);
 
-            var imgData=ctxL.createImageData(w,h);
-
             var  grayData= pupil.gs(eyeData.data);
-            //var  grayInvs = pupil.invs(grayData);
-
-
+            var  thres = pupil.fT(pupil.hist(grayData),w*h,0.1);
+            var  grayCut = pupil.bin(grayData,thres);
+            var  grayInvs = pupil.invs(grayCut);
             //var  grayBin = pupil.bin(grayInvs,200,0);
             //var  grayCny = pupil.cny(grayData,w,h);
             //var  grayCut2 = pupil.bin(grayCny,150);
-            var  graySb = pupil.sbl(grayData,w,h,pupil.kernel.k0);
+            var  graySb = pupil.sbl(grayCut,w,h,pupil.kernel.k0);
 
-            var  thres = pupil.fT(pupil.hist(graySb),w*h,0.1);
-
-            var  grayCut = pupil.bin(graySb,thres);
             //var  grayCut = pupil.dcut(grayCny,135,0);
-            var  data = graySb;
+            var  data = grayInvs;
 
+            var imgData=ctxL.createImageData(w,h);
             for(var x=0;x<w;x++)
             {
                 for(var y=0;y<h;y++)

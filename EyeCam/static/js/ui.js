@@ -1,7 +1,9 @@
 
 // Full Screen Utils
-function fullScreen() {var de = document.documentElement;if(de.requestFullscreen){de.requestFullscreen();}else if (de.mozRequestFullScreen) {de.mozRequestFullScreen();}else if (de.webkitRequestFullScreen){de.webkitRequestFullScreen();}}
+function fullScreen() {
+    var de = document.documentElement;if(de.requestFullscreen){de.requestFullscreen();}else if (de.mozRequestFullScreen) {de.mozRequestFullScreen();}else if (de.webkitRequestFullScreen){de.webkitRequestFullScreen();}}
 function exitFullscreen() {var de = document;if (de.exitFullscreen) {de.exitFullscreen();}else if (de.mozCancelFullScreen) {de.mozCancelFullScreen();}else if (de.webkitCancelFullScreen) {de.webkitCancelFullScreen();}}
+
 
 /*
  * Main calibration function utils
@@ -16,7 +18,8 @@ var Cvs = function()
     canvas.height=window.innerHeight;
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
-    document.body.appendChild(this.canvas);
+    var ctn = document.getElementById("Container");
+    ctn.appendChild(this.canvas);
     window.addEventListener( 'resize', function(){
         canvas.width=window.innerWidth;
         canvas.height=window.innerHeight;
@@ -82,3 +85,15 @@ var Circles = function(w,h,sp,r,c)
 
 Circles.prototype.drawAll= function(ctx){for(var i=0;i< this.children.length;i++){drawCircle(ctx,this.children[i]);}};
 Circles.prototype.drawOne= function(ctx,index){drawCircle(ctx,this.children[index]);};
+
+
+
+function saveImg (cvs,filename) {
+    var link = document.createElement('a');
+    // here is the most important part because if you dont replace you will get a DOM 18 exception.
+    var image = cvs.toDataURL("image/png",'haha').replace("image/png", "image/octet-stream");
+    link.href = image;
+    link.download = filename+".png";
+    link.click();
+    //window.location.href=image; // it will save locally
+}
