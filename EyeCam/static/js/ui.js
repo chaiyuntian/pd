@@ -97,3 +97,71 @@ function saveImg (cvs,filename) {
     link.click();
     //window.location.href=image; // it will save locally
 }
+
+
+function drawLine(ctx,sx,sy,ex,ey,width){
+    width = width || 1.0;
+    ctx.strokeStyle='red';
+    ctx.lineWidth=width;
+    ctx.lineCap='square';
+    ctx.beginPath();
+    ctx.moveTo(sx,sy);
+    ctx.lineTo(ex,ey);
+    ctx.stroke();
+    ctx.closePath();
+
+}
+
+function drawGrids(ctx,tb,lb,offsetx,offsety){
+    var x = tb.x||0.0;
+    var y = tb.y||0.0;
+    var w = tb.w||0.0;
+    var h = tb.h||0.0;
+    var nx = tb.nx||0.0;
+    var ny = tb.ny||0.0;
+
+
+    var dx = w/nx;
+    var dy = h/ny;
+
+    // label tags
+    var ux = lb.x||0.0;
+    var uy = lb.y||0.0;
+    var uw = lb.w||0.0;
+    var uh = lb.h||0.0;
+
+    var udx = uw/nx;
+    var udy = uh/ny;
+
+    var i,j;
+    // draw horizontal lines
+
+    for(i=0;i<=ny;i++)
+    {
+        var cy = y+i*dy;
+        drawLine(ctx,x,cy,x+w,cy);
+
+        var x_label = uy+udy*i;
+        drawText(ctx,x_label.toString(),x+w,cy,8);
+    }
+
+    // draw vertical lines
+    for(j=0;j<=nx;j++)
+    {
+        var cx = x+j*dx;
+        drawLine(ctx,cx,y,cx,y+h);
+
+        var y_label = ux+udx*j;
+        drawText(ctx,y_label.toString(),cx,y+h+8,8);
+    }
+
+    // draw texts
+}
+
+function drawText(ctx,ctn,x,y,fsize){
+
+    fsize = fsize||"8px";
+    ctx.font = "8px Courier New";
+    ctx.fillStyle = "red";
+    ctx.fillText(ctn, x,y);
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas width="500" height="500" id ="cvs"></canvas>
+<script src="../static/js/ui.js"></script>
+<script>
+    var cvs = document.getElementById('cvs');
+    var ctx = cvs.getContext('2d');
+
+    drawGrids(ctx,{x:10,y:10,w:400,h:200,nx:2,ny:2},{x:0,y:0,w:200,h:20});
+
+</script>
+</body>
+</html>
