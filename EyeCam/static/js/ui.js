@@ -120,7 +120,6 @@ function drawGrids(ctx,tb,lb,offsetx,offsety){
     var nx = tb.nx||0.0;
     var ny = tb.ny||0.0;
 
-
     var dx = w/nx;
     var dy = h/ny;
 
@@ -129,6 +128,13 @@ function drawGrids(ctx,tb,lb,offsetx,offsety){
     var uy = lb.y||0.0;
     var uw = lb.w||0.0;
     var uh = lb.h||0.0;
+
+    var ux_xo = lb.xxo||0.0;
+    var ux_yo = lb.xyo||0.0;
+
+    var uy_xo = lb.yxo||0.0;
+    var uy_yo = lb.yyo||0.0;
+
 
     var udx = uw/nx;
     var udy = uh/ny;
@@ -142,7 +148,7 @@ function drawGrids(ctx,tb,lb,offsetx,offsety){
         drawLine(ctx,x,cy,x+w,cy);
 
         var x_label = uy+udy*i;
-        drawText(ctx,x_label.toString(),x+w,cy,8);
+        drawText(ctx,x_label.toString(),x+w+ux_xo,cy+ux_yo,8);
     }
 
     // draw vertical lines
@@ -152,7 +158,7 @@ function drawGrids(ctx,tb,lb,offsetx,offsety){
         drawLine(ctx,cx,y,cx,y+h);
 
         var y_label = ux+udx*j;
-        drawText(ctx,y_label.toString(),cx,y+h+8,8);
+        drawText(ctx,y_label.toString(),cx+uy_xo,y+h+8+uy_yo,8);
     }
 
     // draw texts

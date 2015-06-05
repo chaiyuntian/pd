@@ -75,29 +75,40 @@ function saveImg (cvs,filename) {
     //window.location.href=image; // it will save locally
 }
 
-
 var tempCanvas = document.createElement("canvas");
-
 
 tempCanvas.save = function(filename,data,w,h){
 
     tempCanvas.width = w;
     tempCanvas.height =h;
     var ctx = tempCanvas.getContext('2d');
+
     var imgData=ctx.createImageData(w,h);
+
+
     for(var x=0;x<w;x++)
     {
         for(var y=0;y<h;y++)
         {
             var k = x+y*w;
-            var k2 = k*4;
-            imgData.data[k2]=data[k];
-            imgData.data[k2+1]=data[k];
-            imgData.data[k2+2]=data[k];
-            imgData.data[k2+3]=data[k];
+            var k2 =k*4;
+            for(var tm = 0;tm<4;tm++)
+            {
+                imgData.data[k2+tm]=data[k2+tm];
+            }
+            //imgData.data[k2+1]=data[k+1];
+            //imgData.data[k2+2]=data[k+2];
+            //imgData.data[k2+3]=data[k+3];
         }
     }
+
+    //imgData.data=data;
     ctx.putImageData(imgData,0,0);
+    //ctx.putImageData(data,0,0);
+    var offsetx = 20;
+    var offsety = 20;
+    drawGrids(ctx,{x:offsetx,y:offsety,w:w-offsetx*2,h:h-offsety*2,nx:10,ny:5},{x:0,y:0,w:200,h:200});
+
     saveImg(tempCanvas,filename);
 
 };
@@ -178,7 +189,7 @@ camera.init({
         if(getimage){
             getimage = false;
             var data = canvas.getContext('2d').getImageData(0,0,w,h);
-            var img = process(data,w,h);
+            var img = data.data;//process(data,w,h);
 
             imageList.push(img);
             tempCanvas.save("test",img,w,h);
